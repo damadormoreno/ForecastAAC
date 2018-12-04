@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 
 import com.deneb.astroapps.wheateraac.R
@@ -50,7 +52,22 @@ class CurrentWeatherFragment : ScopedFragment() , KodeinAware{
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
             if (it == null) return@Observer
 
-            tvCurrent.text = it.toString()
+            group_loading.visibility = View.GONE
+            updateLocation("Madrid")
+            updateDateToToday()
+
         })
+    }
+
+    private fun updateLocation(location: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+    }
+
+    private fun updateDateToToday() {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Today"
+    }
+
+    private fun updateTemperatures(temperature: Double, feelsLike: Double) {
+
     }
 }

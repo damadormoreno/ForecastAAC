@@ -2,6 +2,7 @@ package com.deneb.astroapps.wheateraac.ui.weather.current
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.storage.StorageVolume
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.deneb.astroapps.wheateraac.data.ApixuWeatherApiService
 import com.deneb.astroapps.wheateraac.data.network.ConnectivityInterceptorImpl
 import com.deneb.astroapps.wheateraac.data.network.WeatherNetworkDataSource
 import com.deneb.astroapps.wheateraac.data.network.WeatherNetworkDataSourceImpl
+import com.deneb.astroapps.wheateraac.internal.glide.GlideApp
 import com.deneb.astroapps.wheateraac.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -55,8 +57,19 @@ class CurrentWeatherFragment : ScopedFragment() , KodeinAware{
             group_loading.visibility = View.GONE
             updateLocation("Madrid")
             updateDateToToday()
-
+            updateTemperatures(it.temperature, it.feelsLikeTemperature)
+            updateCondition(it.conditionText)
+            updatePrecipitation(it.precipitationVolume)
+            updateWind(it.windDirection, it.windSpeed)
+            updateVisibility(it.visibilityDistance)
+            GlideApp.with(this@CurrentWeatherFragment)
+                .load("http:${it.conditionIconUrl}")
+                .into(imageView_condition_icon)
         })
+    }
+
+    private fun chooseLocalizeUnitAbbreviation(metric: String, imperial: String): String {
+        return if (viewModel.isMetric) metric else imperial
     }
 
     private fun updateLocation(location: String) {
@@ -68,6 +81,25 @@ class CurrentWeatherFragment : ScopedFragment() , KodeinAware{
     }
 
     private fun updateTemperatures(temperature: Double, feelsLike: Double) {
+        val unitAbbreviation = chooseLocalizeUnitAbbreviation("ºC", "ºF")
+        textView_temperature.text = "$temperature$unitAbbreviation"
+        textView_feels_like_temperature.text = "Feels like $feelsLike$unitAbbreviation"
+    }
 
+    private fun updateCondition(condition: String) {
+        textView_condition.text = condition
+    }
+
+    private fun updatePrecipitation(precipitationVolume: Double) {
+        val unitAbbreviation = chooseLocalizeUnitAbbreviation("mm", "in")
+        textView_precipitation.text = "Precipitation $precipitationVolume $unitAbbreviation"
+    }
+    private fun updateWind(windDirection: String, windSpeed: Double) {
+        val unitAbbreviation = chooseLocalizeUnitAbbreviation("kph", "mph")
+        textView_wind.text = "Wind $windDirection, $windSpeed $unitAbbreviation"
+    }
+    private fun updateVisibility(visibilityDistance: Double) {
+        val unitAbbreviation = chooseLocalizeUnitAbbreviation("km", "mi")
+        textView_visibility.text = "Visibility $visibilityDistance $unitAbbreviation"
     }
 }

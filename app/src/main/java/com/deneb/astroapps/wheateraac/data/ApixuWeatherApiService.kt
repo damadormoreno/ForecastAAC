@@ -21,7 +21,7 @@ interface ApixuWeatherApiService {
     @GET("current.json")
     fun getCurrentWeather(
         @Query("q") location: String,
-        @Query("lang") languageCode: String = "es"
+        @Query("lang") languageCode: String = "en"
     ): Deferred<CurrentWeatherResponse>
 
     companion object {

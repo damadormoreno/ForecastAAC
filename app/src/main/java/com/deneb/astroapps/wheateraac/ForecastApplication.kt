@@ -10,6 +10,8 @@ import com.deneb.astroapps.wheateraac.data.network.ConnectivityInterceptor
 import com.deneb.astroapps.wheateraac.data.network.ConnectivityInterceptorImpl
 import com.deneb.astroapps.wheateraac.data.network.WeatherNetworkDataSource
 import com.deneb.astroapps.wheateraac.data.network.WeatherNetworkDataSourceImpl
+import com.deneb.astroapps.wheateraac.data.provider.LocationProvider
+import com.deneb.astroapps.wheateraac.data.provider.LocationProviderImpl
 import com.deneb.astroapps.wheateraac.data.provider.UnitProvider
 import com.deneb.astroapps.wheateraac.data.provider.UnitProviderImpl
 import com.deneb.astroapps.wheateraac.ui.weather.current.CurrentWeatherViewModelFactory
@@ -28,10 +30,12 @@ class ForecastApplication: Application() , KodeinAware{
 
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
+        bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl() }
+        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }

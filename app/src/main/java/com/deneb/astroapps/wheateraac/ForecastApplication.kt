@@ -1,6 +1,7 @@
 package com.deneb.astroapps.wheateraac
 
 import android.app.Application
+import android.content.Context
 import androidx.preference.PreferenceManager
 import com.deneb.astroapps.wheateraac.data.ApixuWeatherApiService
 import com.deneb.astroapps.wheateraac.data.Repository.ForecastRepository
@@ -15,9 +16,11 @@ import com.deneb.astroapps.wheateraac.data.provider.LocationProviderImpl
 import com.deneb.astroapps.wheateraac.data.provider.UnitProvider
 import com.deneb.astroapps.wheateraac.data.provider.UnitProviderImpl
 import com.deneb.astroapps.wheateraac.ui.weather.current.CurrentWeatherViewModelFactory
+import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.Provider
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -34,7 +37,8 @@ class ForecastApplication: Application() , KodeinAware{
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
-        bind<LocationProvider>() with singleton { LocationProviderImpl() }
+        bind() from provider {LocationServices.getFusedLocationProviderClient(instance<Context>())}
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }

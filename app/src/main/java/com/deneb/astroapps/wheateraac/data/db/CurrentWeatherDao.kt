@@ -7,9 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.deneb.astroapps.wheateraac.data.db.entity.CURRENT_WEATHER_ID
 import com.deneb.astroapps.wheateraac.data.db.entity.CurrentWeatherEntry
-import com.deneb.astroapps.wheateraac.data.db.unitlocalized.ImperialCurrentWeatherEntry
-import com.deneb.astroapps.wheateraac.data.db.unitlocalized.MetricCurrentWeatherEntry
-import com.deneb.astroapps.wheateraac.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import com.deneb.astroapps.wheateraac.data.db.unitlocalized.current.ImperialCurrentWeatherEntry
+import com.deneb.astroapps.wheateraac.data.db.unitlocalized.current.MetricCurrentWeatherEntry
 
 @Dao
 interface CurrentWeatherDao {

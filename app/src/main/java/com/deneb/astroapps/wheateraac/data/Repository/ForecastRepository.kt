@@ -2,7 +2,7 @@ package com.deneb.astroapps.wheateraac.data.Repository
 
 import androidx.lifecycle.LiveData
 import com.deneb.astroapps.wheateraac.data.db.entity.WeatherLocation
-import com.deneb.astroapps.wheateraac.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import com.deneb.astroapps.wheateraac.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 
 interface ForecastRepository {
 

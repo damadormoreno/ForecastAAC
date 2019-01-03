@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.deneb.astroapps.wheateraac.data.db.CurrentWeatherDao
 import com.deneb.astroapps.wheateraac.data.db.WeatherLocationDao
 import com.deneb.astroapps.wheateraac.data.db.entity.WeatherLocation
-import com.deneb.astroapps.wheateraac.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import com.deneb.astroapps.wheateraac.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import com.deneb.astroapps.wheateraac.data.network.WeatherNetworkDataSource
 import com.deneb.astroapps.wheateraac.data.network.response.CurrentWeatherResponse
 import com.deneb.astroapps.wheateraac.data.provider.LocationProvider

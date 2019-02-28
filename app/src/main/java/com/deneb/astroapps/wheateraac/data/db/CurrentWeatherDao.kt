@@ -12,13 +12,12 @@ import com.deneb.astroapps.wheateraac.data.db.unitlocalized.current.MetricCurren
 
 @Dao
 interface CurrentWeatherDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(weatherEntry: CurrentWeatherEntry)
 
-    @Query(value = "select * from current_weather where id = $CURRENT_WEATHER_ID")
+    @Query("select * from current_weather where id = $CURRENT_WEATHER_ID")
     fun getWeatherMetric(): LiveData<MetricCurrentWeatherEntry>
 
-    @Query(value = "select * from current_weather where id = $CURRENT_WEATHER_ID")
+    @Query("select * from current_weather where id = $CURRENT_WEATHER_ID")
     fun getWeatherImperial(): LiveData<ImperialCurrentWeatherEntry>
 }

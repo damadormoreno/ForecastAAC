@@ -6,15 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.deneb.astroapps.wheateraac.data.db.entity.CurrentWeatherEntry
+import com.deneb.astroapps.wheateraac.data.db.entity.FutureWeatherEntry
 import com.deneb.astroapps.wheateraac.data.db.entity.WeatherLocation
 
 @Database(
-    entities = [CurrentWeatherEntry::class, WeatherLocation::class],
+    entities = [CurrentWeatherEntry::class, FutureWeatherEntry::class, WeatherLocation::class],
     version = 1
 )
 @TypeConverters(LocalDateConverter::class)
-abstract class ForecastDatabase: RoomDatabase() {
-
+abstract class ForecastDatabase : RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
     abstract fun futureWeatherDao(): FutureWeatherDao
     abstract fun weatherLocationDao(): WeatherLocationDao
@@ -28,9 +28,8 @@ abstract class ForecastDatabase: RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext,
-                    ForecastDatabase::class.java,
-                    "futureWeatherEntries.db")
-                    .build()
+            Room.databaseBuilder(context.applicationContext,
+                ForecastDatabase::class.java, "futureWeatherEntries.db")
+                .build()
     }
 }
